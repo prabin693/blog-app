@@ -7,24 +7,31 @@ import com.blog.blogapp.repositories.UserRepo;
 import com.blog.blogapp.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private   UserRepo userRepo;
 
+
     @Autowired
     private ModelMapper modelMapper;
-    
+
+
     public UserDto createUser(UserDto userDto) {
       User user = this.DtoToUser(userDto);
-        User savedUser = this.userRepo.save(user);
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+      User savedUser = this.userRepo.save(user);
         return this.UserToDto(savedUser);
     }
 
@@ -40,10 +47,10 @@ public class UserServiceImpl implements UserService {
         User user = this.userRepo.findById(userId).orElseThrow(()-> {
             return new ResourceNotFoundException("User", "id", userId);
         });
-        user.setName(userDto.getName());
+//        user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
-        user.setAbout(userDto.getAbout());
+//        user.setAbout(userDto.getAbout());
        User updateUser = this.userRepo.save(user);
        UserDto userDto1 = this.UserToDto(updateUser);
          return userDto1;
@@ -68,22 +75,20 @@ public class UserServiceImpl implements UserService {
     }
 
     private User DtoToUser(UserDto userDto){
-        User user = this.modelMapper.map(userDto, User.class);
-//        user.setId(userDto.getId());
+        //        user.setId(userDto.getId());
 //        user.setName(userDto.getName());
 //        user.setEmail(userDto.getEmail());
 //        user.setPassword(userDto.getPassword());
 //        user.setAbout(userDto.getAbout());
-        return user;
+        return this.modelMapper.map(userDto, User.class);
     }
 
     private UserDto UserToDto(User user){
-        UserDto userDto = this.modelMapper.map(user, UserDto.class);
-//        userDto.setId(user.getId());
+        //        userDto.setId(user.getId());
 //        userDto.setName(user.getName());
 //        userDto.setEmail(user.getEmail());
 //        userDto.setPassword(user.getPassword());
 //        userDto.setAbout(user.getAbout());
-        return userDto;
+        return this.modelMapper.map(user, UserDto.class);
     }
 }

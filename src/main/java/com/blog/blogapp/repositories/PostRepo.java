@@ -12,9 +12,10 @@ import java.util.List;
 public interface PostRepo extends JpaRepository<Post, Integer> {
 
     List<Post> findByUser(User user);
+
     List<Post> findByCategory(Category category);
 
     @Query("SELECT p FROM Post p WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword%")
-    List<Post> findByTitle(@Param("key")String title);
+    List<Post> findByTitle(@Param("key") String title);
 
 }

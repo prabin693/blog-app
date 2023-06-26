@@ -1,7 +1,7 @@
 package com.blog.blogapp.entities;
 
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.List;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer categoryId;
 
     @Column(name = "title", nullable = false)

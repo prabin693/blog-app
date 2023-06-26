@@ -1,7 +1,10 @@
 package com.blog.blogapp.payloads;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +14,8 @@ import lombok.Setter;
 @Setter
 public class CategoryDto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer categoryId;
 
     @NotEmpty(message = "Category title cannot be null")

@@ -2,8 +2,7 @@ package com.blog.blogapp.controllers;
 import com.blog.blogapp.payloads.ApiResponse;
 import com.blog.blogapp.payloads.CategoryDto;
 import com.blog.blogapp.services.CategoryService;
-import com.blog.blogapp.services.impl.CategoryServiceImpl;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,14 +16,18 @@ import java.util.List;
 @RequestMapping("/api/category")
 public class CategoryController  {
 
-    CategoryService categoryService;
+    @Autowired
+    private CategoryService categoryService;
+
 
 
     //create
+    @CrossOrigin("*")
     @PostMapping("/create")
+
     public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto){
        CategoryDto createCategory= this.categoryService.createCategory(categoryDto);
-         return new ResponseEntity<CategoryDto>(createCategory, HttpStatus.CREATED);
+         return new ResponseEntity<>(createCategory, HttpStatus.CREATED);
     }
 
     //update
@@ -39,7 +42,7 @@ public class CategoryController  {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ApiResponse> deleteCategory(@PathVariable Integer id){
         this.categoryService.deleteCategory(id);
-     return new ResponseEntity<ApiResponse> (new ApiResponse(true, "Category deleted successfully"), HttpStatus.OK);
+        return ResponseEntity.ok(new ApiResponse(true, "Category deleted successfully"));
     }
 
 

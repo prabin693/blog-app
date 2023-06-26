@@ -1,6 +1,6 @@
 package com.blog.blogapp.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ public class Post {
     @Column(name = "post_title", nullable = false, length = 100)
     private String title;
 
-    @Column(name = "post_content", nullable = false, length = 10000)
+    @Column(name = "post_content")
     private String content;
 
     private String imageName;

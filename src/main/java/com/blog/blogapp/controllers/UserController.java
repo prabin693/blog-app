@@ -7,12 +7,14 @@ import com.blog.blogapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
 @RestController
+@CrossOrigin(origins="http://localhost:3000", allowCredentials = "true", allowedHeaders = "*", exposedHeaders = "Access-Control-Allow-Origin")
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -36,6 +38,8 @@ public class UserController {
 
 
     //delete - delete user
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable Integer id){
         this.userService.deleteUser(id);

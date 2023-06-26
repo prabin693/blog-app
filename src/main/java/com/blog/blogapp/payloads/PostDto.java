@@ -22,4 +22,7 @@ public class PostDto {
     private UserDto user;
     private Set<CommentDto> comments = new HashSet<>();
 
+    public static void setImageName(String imageName ) {
+
+    }
 }

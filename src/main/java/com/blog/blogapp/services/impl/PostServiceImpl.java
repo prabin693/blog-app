@@ -45,7 +45,7 @@ public  class PostServiceImpl  implements PostService {
         User user = this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found", "User Id", userId));
         Category category = this.categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category not found", "Category Id", categoryId));
         Post post = modelMapper.map(postDto, Post.class);
-        post.setImageName("default.png");
+        post.setImageName("default.jpg");
         post.setAddedDate(new Date());
         post.setUser(user);
         post.setCategory(category);
